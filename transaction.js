@@ -1,8 +1,9 @@
+
 //set the interval so that the transaction function will execute every minute
-var t = setInterval(initialEscrowServices(address), 60000);
+var t = setInterval(initialEscrowServices(txNum), 60000);
 //javascript function to query the block explorer until there are 5 confirmations, 
 //then execute the escrow services (whether it is ordering a pizza, sending an e-mail alert to a merchant, or anything else)
-function intialEscrowServices(num){
+function intialEscrowServices(txNum){
     $.ajax({
 	url: "http://blockexporer.bitcoin-class.org/rawtx/" + num,
 	datatype: 'jsonp',
@@ -19,9 +20,10 @@ function intialEscrowServices(num){
 //Javascript function that is called as soon as delivery of product is confirmed by customer
 //This would be executed when the pizza API responded "delivered" to a request
 //This could also be triggered by some confirmation by the customer on our website
-function transactionToMerchant(address){
+function transactionToMerchant(toAddress, amount){
     /*****GO CODE THAT WOULD EXECUTE A TRANSACTION*******/
-    /**
+    /**modified from periodic_sender.go by Nick Skelsey
+       this code would take two parameters, the address to send to and the amount to send
 package main
  
 import (
@@ -38,9 +40,8 @@ import (
 	"time"
 )
  
-var firstAddr = flag.String("from", "", "The first addr to send to.")
-var secondAddr = flag.String("to", "", "The second addr to send to.")
-var amountToSpend = flag.String("amount", "", "The amount you will send")
+var firstAddr = toAddress
+var amountToSpend = amount
  
 const (
 	// This should match your settings in pointcoind.conf
@@ -106,34 +107,24 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
- 
-	from, err := decodeAddr(*secondAddr)
-	if err != nil {
-		log.Fatal(err)
-	}
+
  
 	amnt, _ := btcutil.NewAmount(amountToSend)
  
-	forward := true
 		// Unlock the rpc wallet with the current passpharse for 60 seconds
 		err := client.WalletPassphrase("password", 60)
 		if err != nil {
 			log.Fatal(err)
 		}
 		var resp *btcwire.ShaHash
-		// Send pointcoin either to the 'to' address or back to the 'from' address.
-		if forward {
-			resp, err = client.SendToAddress(to, amnt)
-		} else {
-			resp, err = client.SendToAddress(from, amnt)
-		}
+		resp, err = client.SendToAddress(to, amnt)
 		if err != nil {
 			log.Println(err)
 		}
 		log.Printf("Sent a tx: %s!\n", resp)
  
-		forward = !forward
 	
 }
      **/
+/*********END GO CODE EXAMPLE********/
 }

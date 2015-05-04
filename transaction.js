@@ -5,7 +5,7 @@ var t = setInterval(initialEscrowServices(txNum), 60000);
 //then execute the escrow services (whether it is ordering a pizza, sending an e-mail alert to a merchant, or anything else)
 function intialEscrowServices(txNum){
     $.ajax({
-	url: "http://blockexporer.bitcoin-class.org/rawtx/" + num,
+	url: "http://blockexporer.bitcoin-class.org/rawtx/" + txNum,
 	datatype: 'jsonp',
 	success: function(data){
 	    if( value.(*btcjson.TxRawResult).Confirmations >= 5){

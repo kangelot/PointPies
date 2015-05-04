@@ -1,3 +1,5 @@
+var t = setInterval(transaction(address), 60000);
+
 function transaction(num){
     $.ajax({
 	url: "http://blockexporer.bitcoin-class.org/rawtx/" + num,
@@ -6,12 +8,8 @@ function transaction(num){
 	    if( value.(*btcjson.TxRawResult).Confirmations > 5){
 		//execute pizza order
 		//but actually just send a new transaction to another address
+		clearInterval(t);
 	    }
 	}
     });
 }
-
-transaction(address);
-setInterval(function(){
-    transaction(address)
-}, 60000);

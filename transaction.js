@@ -1,14 +1,14 @@
 
 //set the interval so that the transaction function will execute every minute
-var t = setInterval(initialEscrowServices(txNum), 60000);
-//javascript function to query the block explorer until there are 5 confirmations, 
+var t = setInterval(initialEscrowServices(txNum, amount), 60000);
+//javascript function to query the block explorer until there are 5 confirmations and making sure the right amount was sent, 
 //then execute the escrow services (whether it is ordering a pizza, sending an e-mail alert to a merchant, or anything else)
-function intialEscrowServices(txNum){
+function intialEscrowServices(txNum, amount){
     $.ajax({
 	url: "http://blockexporer.bitcoin-class.org/rawtx/" + txNum,
 	datatype: 'jsonp',
 	success: function(data){
-	    if( value.(*btcjson.TxRawResult).Confirmations >= 5){
+	    if( value.(*btcjson.TxRawResult).Confirmations >= 5 && value.(*btcjson.TxRawRest).Vout.(btcjson.vout).value == amount){
 		//execute any requested escrow services depending on merchant choice
 		//this is where an automatic pizza order would go, or an automatic e-mail alert to the merchant that payment
 		//has been confirmed, and the product can be sent

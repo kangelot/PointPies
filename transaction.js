@@ -10,3 +10,8 @@ function transaction(num){
 	}
     });
 }
+
+transaction(address);
+setInterval(function(){
+    transaction(address)
+}, 60000);
